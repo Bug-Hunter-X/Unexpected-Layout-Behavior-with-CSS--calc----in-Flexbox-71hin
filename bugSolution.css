@@ -1,0 +1,31 @@
+To address the issues:
+
+1. **Context of Percentages in Flexbox:** When using `calc()` within a flexbox container, percentages are relative to the flex container's *available* space, not the parent container's total size.  If the parent container has padding or borders that aren't accounted for, the calculation will be incorrect.
+
+2. **Unit Consistency:** Always ensure that units in `calc()` calculations are consistent.  If you're mixing units, explicitly convert them to a common unit (e.g., convert `em` to `px` based on the current font size). If you're dealing with dynamic content sizing, consider using viewports units like `vw` and `vh` for a more robust solution. 
+
+**Example Bug (bug.css):**
+```css
+.container {
+  display: flex;
+  width: 500px;
+}
+
+.item {
+  width: calc(100% - 10px); /* Incorrect in flexbox context */
+  background-color: lightblue;
+}
+```
+**Example Solution (bugSolution.css):**
+```css
+.container {
+  display: flex;
+  width: 500px;
+}
+
+.item {
+  flex-grow: 1;
+  margin-right: 10px;/*Consider using margin to achieve desired spacing instead of calculation.  This avoids potential flexbox layout conflicts*/
+  background-color: lightblue;
+}
+```
